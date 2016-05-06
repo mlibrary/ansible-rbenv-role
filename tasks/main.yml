@@ -94,6 +94,26 @@
   tags:
     - rbenv
 
+- name: set default-gems for system
+  copy: src=default-gems dest={{ rbenv_root }}/default-gems
+  become: yes
+  when:
+    - "system" == "{{ rbenv.env }}"
+    - default_gems_file is not defined
+  ignore_errors: yes
+  tags:
+    - rbenv
+
+- name: set custom default-gems system
+  copy: src={{ default_gems_file }} dest={{ rbenv_root }}/default-gems
+  become: yes
+  when:
+    - "system" == "{{ rbenv.env }}"
+    - default_gems_file is defined
+  ignore_errors: yes
+  tags:
+    - rbenv
+
 - name: set default-gems for select users
   copy: src=default-gems dest={{ rbenv_root }}/default-gems
   with_items: "{{ rbenv_users }}"
