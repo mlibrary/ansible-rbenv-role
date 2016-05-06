@@ -98,7 +98,7 @@
   copy: src=default-gems dest={{ rbenv_root }}/default-gems
   become: yes
   when:
-    - "system" == "{{ rbenv.env }}"
+    - rbenv.env == "system"
     - default_gems_file is not defined
   ignore_errors: yes
   tags:
@@ -108,7 +108,7 @@
   copy: src={{ default_gems_file }} dest={{ rbenv_root }}/default-gems
   become: yes
   when:
-    - "system" == "{{ rbenv.env }}"
+    - rbenv.env == "system"
     - default_gems_file is defined
   ignore_errors: yes
   tags:
